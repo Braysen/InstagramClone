@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2,4,3),
+    padding: theme.spacing(6,4,6),
   },
 }));
 
@@ -116,16 +116,19 @@ function App() {
             </center>
             <Input
                   placeholder="username"
+                  className="appsignup__textfirst space"
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}/>
             <Input
                   placeholder="email"
+                  className="appsignup__textfirst"
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}/>
             <Input
                   placeholder="password"
+                  className="appsignup__textsecond"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}/>
@@ -146,11 +149,13 @@ function App() {
             </center>
             <Input
                   placeholder="email"
+                  className="appsignup__textfirst space"
                   type="text"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}/>
             <Input
                   placeholder="password"
+                  className="appsignup__textsecond"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}/>
@@ -160,6 +165,7 @@ function App() {
       </Modal>
 
       <div className="app__header">
+        <div className="app__headerBody">
         <img 
           className="app__headerImage"
         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
@@ -173,17 +179,26 @@ function App() {
             <Button onClick={() => setOpen(true)}>Sign Up</Button>
           </div>
         )}
+        </div>
       </div>
 
       <div className="app__posts">
         <div className="app__postsLeft">
           {
             posts.map(({id,post}) => (
-              <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
             ))
           }
         </div>
         <div className="app__postsRight">
+
+          {
+            user?.displayName ? (
+              <ImageUpload username={user.displayName}/>
+            ):(
+              <h3 style={{fontSize:'0px'}}>Sorry you need to login to upload</h3>
+          )}
+
           <InstagramEmbed
             url="https://www.instagram.com/p/B-UoosMpFnS/"
             maxWidth={320}
@@ -196,18 +211,10 @@ function App() {
             onAfterRender={() => {}}
             onFailure={() => {}}
           />
+
         </div>
-
-        
-      </div>
-
-
-      {
-        user?.displayName ? (
-          <ImageUpload username={user.displayName}/>
-        ):(
-          <h3>Sorry you need to login to upload</h3>
-      )}
+    
+      </div>  
 
     </div>
   );
